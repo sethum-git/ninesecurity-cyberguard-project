@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Incident | CyberThreat Report Platform</title>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="report.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="atr-background" id="atrBackground"></div>
+    <div class="logo-loader" id="logoLoader">
+        <div class="logo-animation">
+            <div class="logo-container">
+                <img src="logo.png" alt="CyberGuard Logo" class="animated-logo">
+            </div>
+            <div class="loading-text" style="position: absolute; bottom: -50px; width: 100%; text-align: center;">
+                <span class="loading-dots">.</span>
+                <span class="loading-dots">.</span>
+                <span class="loading-dots">.</span>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('logoLoader');
+    
+    setTimeout(function() {
+        if (loader) {
+            loader.classList.add('fade-out');
+            
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    }, 2000);
+});
+</script>
+
+    <nav class="navbar">
+        <div class="nav-container">
+<div class="logo-section">
+    <a href="index.html" class="logo-link">
+        <div class="logo-icon">
+            <img src="logo.png" alt="NINE Security Logo" class="animated-logo">
+        </div>
+        <div class="logo-text">
+            <h1 class="logo-title">CyberGuard</h1>
+            <p class="logo-subtitle">Threat Report Platform</p>
+        </div>
+    </a>
+</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="report.html" class="nav-link active">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Report Incident</span>
+                </a>
+                <a href="incidents.html" class="nav-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Incidents</span>
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </div>
+
+            <div class="user-section">
+                <div class="notification-container">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+
+                <div class="profile-container" id="profileContainer">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="profile-avatar">AF</div>
+                        <div class="profile-info">
+                            <span class="profile-name">Amal Fernando</span>
+                            <span class="profile-role">Administrator</span>
+                        </div>
+                        <i class="fas fa-chevron-down" id="profileArrow"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="profile.html" class="dropdown-item">
+                            <i class="fas fa-user-circle"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-user-info">
+                    <div class="mobile-avatar">AF</div>
+                    <div>
+                        <p class="mobile-user-name">Amal Fernando</p>
+                        <p class="mobile-user-role">Administrator</p>
+                    </div>
+                </div>
+                <button class="mobile-close-btn" id="mobileCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-nav-links">
+                <a href="index.html" class="mobile-nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="report.html" class="mobile-nav-link active">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Report Incident</span>
+                </a>
+                <a href="incidents.html" class="mobile-nav-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Incidents</span>
+                </a>
+                <a href="analytics.html" class="mobile-nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="profile.html" class="mobile-nav-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="mobile-nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            
+            <div class="mobile-nav-footer">
+                <button class="mobile-logout-btn" id="mobileLogoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+     <div class="atr-background" id="atrBackground"></div>
+        <script src="atr-background.js"></script>
+    <main class="report-main">
+        <div class="container">
+            <div class="page-header">
+                <div class="header-content">
+                    <h1><i class="fas fa-exclamation-triangle"></i> Report Cyber Incident</h1>
+                    <p>Submit a detailed report of any suspicious activity, security breach, or cyber threat</p>
+                </div>
+                <div class="header-actions">
+                    <a href="incidents.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Incidents
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-form-container">
+                <form id="reportForm" class="report-form">
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h2>Incident Details</h2>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="incidentTitle">
+                                        <i class="fas fa-heading"></i> Incident Title *
+                                    </label>
+                                    <input type="text" id="incidentTitle" 
+                                           placeholder="Brief description of the incident"
+                                           required>
+                                    <small>Example: "Phishing email targeting finance department"</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="incidentCategory">
+                                        <i class="fas fa-tags"></i> Threat Category *
+                                    </label>
+                                    <select id="incidentCategory" required>
+                                        <option value="">Select a category</option>
+                                        <option value="phishing">Phishing Attack</option>
+                                        <option value="malware">Malware/Ransomware</option>
+                                        <option value="ddos">DDoS Attack</option>
+                                        <option value="databreach">Data Breach</option>
+                                        <option value="social">Social Engineering</option>
+                                        <option value="insider">Insider Threat</option>
+                                        <option value="physical">Physical Security Breach</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="incidentSeverity">
+                                        <i class="fas fa-exclamation"></i> Severity Level *
+                                    </label>
+                                    <div class="severity-options">
+                                        <div class="severity-option">
+                                            <input type="radio" id="severity-low" name="severity" value="low" required>
+                                            <label for="severity-low" class="severity-label low">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span>Low</span>
+                                                <small>Minor impact</small>
+                                            </label>
+                                        </div>
+                                        <div class="severity-option">
+                                            <input type="radio" id="severity-medium" name="severity" value="medium">
+                                            <label for="severity-medium" class="severity-label medium">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <span>Medium</span>
+                                                <small>Moderate impact</small>
+                                            </label>
+                                        </div>
+                                        <div class="severity-option">
+                                            <input type="radio" id="severity-high" name="severity" value="high">
+                                            <label for="severity-high" class="severity-label high">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <span>High</span>
+                                                <small>Significant impact</small>
+                                            </label>
+                                        </div>
+                                        <div class="severity-option">
+                                            <input type="radio" id="severity-critical" name="severity" value="critical">
+                                            <label for="severity-critical" class="severity-label critical">
+                                                <i class="fas fa-skull-crossbones"></i>
+                                                <span>Critical</span>
+                                                <small>Severe impact</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="incidentDate">
+                                        <i class="fas fa-calendar-alt"></i> Date & Time *
+                                    </label>
+                                    <input type="datetime-local" id="incidentDate" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="affectedSystems">
+                                        <i class="fas fa-server"></i> Affected Systems/Departments
+                                    </label>
+                                    <div class="tag-input">
+                                        <div class="tags-container" id="tagsContainer"></div>
+                                        <input type="text" id="affectedSystems" 
+                                               placeholder="Type and press Enter to add"
+                                               class="tag-input-field">
+                                        <small>Examples: HR System, Email Server, Finance Dept</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i class="fas fa-align-left"></i>
+                            <h2>Incident Description</h2>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="form-group">
+                                <label for="incidentDescription">
+                                    <i class="fas fa-file-alt"></i> Detailed Description *
+                                </label>
+                                <textarea id="incidentDescription" rows="6" 
+                                          placeholder="Provide a detailed account of what happened, including:
+• What type of incident occurred?
+• When did it happen?
+• Who was involved?
+• What systems or data were affected?
+• What was the immediate impact?
+• Any immediate actions taken?"
+                                          required></textarea>
+                                <div class="char-counter">
+                                    <span id="charCount">0</span>/2000 characters
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="impactAssessment">
+                                    <i class="fas fa-chart-line"></i> Impact Assessment
+                                </label>
+                                <textarea id="impactAssessment" rows="4"
+                                          placeholder="Describe the business impact:
+• Financial impact (if any)
+• Operational disruption
+• Data compromise
+• Reputational damage
+• Legal/regulatory implications"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i class="fas fa-paperclip"></i>
+                            <h2>Evidence & Attachments</h2>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="form-group">
+                                <label for="evidenceDescription">
+                                    <i class="fas fa-microscope"></i> Evidence Details
+                                </label>
+                                <textarea id="evidenceDescription" rows="3"
+                                          placeholder="Describe any evidence collected:
+• Screenshots
+• Log files
+• Network captures
+• Email headers
+• File samples"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-cloud-upload-alt"></i> Upload Files
+                                </label>
+                                <div class="file-upload-area" id="fileUploadArea">
+                                    <div class="upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <div class="upload-text">
+                                        <h3>Drag & drop files here</h3>
+                                        <p>or <span class="browse-link">click to browse</span></p>
+                                        <p class="upload-hint">Supports: JPG, PNG, PDF, TXT, LOG (Max 10MB each)</p>
+                                    </div>
+                                    <input type="file" id="fileUpload" multiple accept=".jpg,.jpeg,.png,.pdf,.txt,.log,.doc,.docx">
+                                </div>
+                                <div class="file-list" id="fileList"></div>
+                                <div class="file-list" id="fileList"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sourceIP">
+                                    <i class="fas fa-network-wired"></i> Source IP Address (Optional)
+                                </label>
+                                <input type="text" id="sourceIP" 
+                                       placeholder="e.g., 192.168.1.1 or attacker.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i class="fas fa-user-shield"></i>
+                            <h2>Reporter Information</h2>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="reporterName">
+                                        <i class="fas fa-user"></i> Your Name *
+                                    </label>
+                                    <input type="text" id="reporterName" 
+                                           placeholder="Enter your full name"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reporterEmail">
+                                        <i class="fas fa-envelope"></i> Email Address *
+                                    </label>
+                                    <input type="email" id="reporterEmail" 
+                                           placeholder="your.email@company.com"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reporterPhone">
+                                        <i class="fas fa-phone"></i> Phone Number
+                                    </label>
+                                    <input type="tel" id="reporterPhone" 
+                                           placeholder="+94 77 123 4567">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reporterDepartment">
+                                        <i class="fas fa-building"></i> Department
+                                    </label>
+                                    <select id="reporterDepartment">
+                                        <option value="">Select department</option>
+                                        <option value="it">IT Department</option>
+                                        <option value="security">Security Team</option>
+                                        <option value="finance">Finance</option>
+                                        <option value="hr">Human Resources</option>
+                                        <option value="operations">Operations</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reporterLocation">
+                                        <i class="fas fa-map-marker-alt"></i> Location
+                                    </label>
+                                    <input type="text" id="reporterLocation" 
+                                           placeholder="Office location or remote">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="urgencyLevel">
+                                        <i class="fas fa-clock"></i> Urgency for Response
+                                    </label>
+                                    <select id="urgencyLevel">
+                                        <option value="normal">Normal (Within 24 hours)</option>
+                                        <option value="high">High (Within 4 hours)</option>
+                                        <option value="urgent">Urgent (Immediate response)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h2>Security & Privacy</h2>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="privacy-notice">
+                                <div class="privacy-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="privacy-content">
+                                    <h3>Your Report is Secure</h3>
+                                    <p>All information submitted is encrypted and handled with strict confidentiality. Only authorized security personnel will have access to this report.</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="confidentiality" required>
+                                    <label for="confidentiality">
+                                        I confirm that this report contains only factual information to the best of my knowledge.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="dataSharing" required>
+                                    <label for="dataSharing">
+                                        I agree to share this information with the security team for investigation purposes.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="saveDraftBtn">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </button>
+                        <button type="button" class="btn btn-warning" id="previewBtn">
+                            <i class="fas fa-eye"></i> Preview Report
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Submit Report
+                        </button>
+                    </div>
+                </form>
+
+                <div class="tips-sidebar">
+                    <div class="tips-card">
+                        <h3><i class="fas fa-lightbulb"></i> Reporting Tips</h3>
+                        <div class="tips-list">
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Be specific about dates and times</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Include all relevant details, no matter how small</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Attach evidence whenever possible</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Don't modify or delete original evidence</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Report immediately after discovery</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-card emergency">
+                        <h3><i class="fas fa-phone-alt"></i> Emergency Contact</h3>
+                        <div class="emergency-info">
+                            <p>For immediate assistance with critical incidents:</p>
+                            <div class="emergency-contact">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Security Hotline</h4>
+                                    <p>+94 11 234 5678</p>
+                                </div>
+                            </div>
+                            <div class="emergency-contact">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Emergency Email</h4>
+                                    <p>security-emergency@company.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-card">
+                        <h3><i class="fas fa-history"></i> Recent Reports</h3>
+                        <div class="recent-reports">
+                            <div class="recent-item">
+                                <span class="recent-title">Phishing: HR Dept</span>
+                                <span class="recent-time">2 hours ago</span>
+                            </div>
+                            <div class="recent-item">
+                                <span class="recent-title">Suspicious Login</span>
+                                <span class="recent-time">Yesterday</span>
+                            </div>
+                            <div class="recent-item">
+                                <span class="recent-title">Malware Detection</span>
+                                <span class="recent-time">2 days ago</span>
+                            </div>
+                        </div>
+                        <a href="incidents.html" class="view-all-link">
+                            <i class="fas fa-list"></i> View All Reports
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Report Preview</h2>
+                <button class="modal-close" id="closePreviewModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-content" id="previewContent">
+                    <!-- Preview will be generated here -->
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closePreviewBtn">
+                    <i class="fas fa-edit"></i> Continue Editing
+                </button>
+                <button class="btn btn-primary" id="confirmSubmitBtn">
+                    <i class="fas fa-check"></i> Confirm & Submit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="successModal">
+        <div class="modal-content success-modal">
+            <div class="modal-body">
+                <center>
+                <h2>Report Submitted Successfully!</h2>
+                <p>Your incident report has been received and assigned tracking ID: <strong id="reportId">CT-2024-00125</strong></p>
+                <div class="success-details">
+                    <p>A confirmation email has been sent to your registered address.</p>
+                    <p>The security team will review your report and contact you if additional information is needed.</p>
+                </div>
+                <div class="success-actions">
+                    <button class="btn btn-secondary" id="newReportBtn">
+                        <i class="fas fa-plus"></i> New Report
+                    </button>
+                    <a href="incidents.html" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> Track Report
+                    </a></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Logo Section -->
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <img src="logo.png" alt="CyberGuard Logo" class="footer-logo-img">
+                    </div>
+                    <div class="footer-logo-text">
+                        <h3>CyberGuard</h3>
+                        <p>Threat Report Platform</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="security-guidelines.html">Security Guidelines</a>
+                    <a href="contact-support.html">Contact Support</a>
+                </div>
+
+                <div class="footer-copyright">
+                    <p>&copy; 2026 NINE Security. All rights reserved.</p>
+                    <p class="footer-tagline">Combatting cybercrime through collective intelligence</p>
+                    <p class="footer-tagline"></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="report.js"></script>
+</body>
+</html>

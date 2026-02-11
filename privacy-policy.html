@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | CyberGuard Security</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .legal-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0066ff, #00d4aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #0066ff;
+        }
+
+        .legal-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+
+        .legal-header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .legal-header i {
+            font-size: 3rem;
+            color: #0066ff;
+            margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .legal-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .legal-header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        .last-updated {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 30px;
+            color: #0066ff;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .legal-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .legal-section {
+            margin-bottom: 40px;
+        }
+
+        .legal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header i {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0066ff;
+            font-size: 1.2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-content {
+            color: #94a3b8;
+            line-height: 1.8;
+            padding-left: 55px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-content li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .section-content li i {
+            color: #10b981;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .highlight-box {
+            background: rgba(0, 102, 255, 0.05);
+            border-left: 4px solid #0066ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .data-table th {
+            background: rgba(0, 102, 255, 0.1);
+            padding: 12px;
+            text-align: left;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 212, 170, 0.1));
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-info h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8;
+        }
+
+        .contact-method i {
+            color: #0066ff;
+            font-size: 1.2rem;
+        }
+
+        .legal-footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #64748b;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .legal-header h1 {
+                font-size: 2rem;
+            }
+            
+            .legal-card {
+                padding: 30px 20px;
+            }
+            
+            .section-content {
+                padding-left: 0;
+            }
+            
+            .section-header {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="grid-overlay"></div>
+
+    <nav class="legal-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="CyberGuard" onerror="this.src='https://via.placeholder.com/40x40/0066ff/ffffff?text=CG'">
+                <span>CyberGuard</span>
+            </a>
+            <div class="nav-links">
+                <a href="privacy-policy.html" class="active">
+                    <i class="fas fa-shield"></i> Privacy
+                </a>
+                <a href="terms-of-service.html">
+                    <i class="fas fa-file-contract"></i> Terms
+                </a>
+                <a href="security-guidelines.html">
+                    <i class="fas fa-lock"></i> Security
+                </a>
+                <a href="contact-support.html">
+                    <i class="fas fa-headset"></i> Support
+                </a>
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i> Back to Portal
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="legal-container">
+        <div class="legal-header">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Privacy Policy</h1>
+            <p>How we protect and handle your data</p>
+            <span class="last-updated">
+                <i class="fas fa-calendar"></i> Last Updated: February 11, 2026
+            </span>
+        </div>
+
+        <div class="legal-card">
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h2>Introduction</h2>
+                </div>
+                <div class="section-content">
+                    <p>At CyberGuard ("we," "our," or "us"), we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our threat intelligence platform and related services.</p>
+                    
+                    <div class="highlight-box">
+                        <i class="fas fa-check-circle" style="color: #10b981; margin-right: 10px;"></i>
+                        <strong>Our Commitment:</strong> We comply with GDPR, CCPA, and other applicable privacy laws and regulations.
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Information We Collect</h2>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: #fff; margin-bottom: 15px;">1. Personal Information</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Account Information:</strong> Name, email address, job title, company name
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Contact Information:</strong> Work email, phone number, business address
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Authentication Data:</strong> Username, encrypted password, multi-factor authentication details
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Billing Information:</strong> Payment method details, billing address (processed securely by third-party providers)
+                        </li>
+                    </ul>
+
+                    <h3 style="color: #fff; margin: 25px 0 15px;">2. Threat Intelligence Data</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Security Events:</strong> IP addresses, threat indicators, incident reports
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>System Logs:</strong> Access logs, activity data, security alerts
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Analytics:</strong> Usage patterns, threat trends, attack vectors
+                        </li>
+                    </ul>
+
+                    <h3 style="color: #fff; margin: 25px 0 15px;">3. Technical Data</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Device Information:</strong> IP address, browser type, operating system
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Usage Data:</strong> Pages visited, features used, time spent
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Cookies:</strong> Essential and functional cookies for platform operation
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-edit"></i>
+                    <h2>Legal Basis for Processing</h2>
+                </div>
+                <div class="section-content">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Purpose</th>
+                                <th>Legal Basis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Provide threat intelligence services</td>
+                                <td>Contract performance</td>
+                            </tr>
+                            <tr>
+                                <td>Security monitoring and incident response</td>
+                                <td>Legitimate interests</td>
+                            </tr>
+                            <tr>
+                                <td>Compliance with legal obligations</td>
+                                <td>Legal obligation</td>
+                            </tr>
+                            <tr>
+                                <td>Marketing communications (with consent)</td>
+                                <td>Consent</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-share-alt"></i>
+                    <h2>How We Share Your Information</h2>
+                </div>
+                <div class="section-content">
+                    <p>We do not sell your personal information. We may share information with:</p>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Service Providers:</strong> Cloud infrastructure, payment processing, customer support
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Security Partners:</strong> Threat intelligence sharing (anonymized data only)
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <strong>Legal Authorities:</strong> When required by law or to protect rights
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-lock"></i>
+                    <h2>Data Security</h2>
+                </div>
+                <div class="section-content">
+                    <p>We implement industry-leading security measures:</p>
+                    <ul>
+                        <li>
+                            <i class="fas fa-shield"></i>
+                            AES-256 encryption for data at rest
+                        </li>
+                        <li>
+                            <i class="fas fa-shield"></i>
+                            TLS 1.3 for data in transit
+                        </li>
+                        <li>
+                            <i class="fas fa-shield"></i>
+                            24/7 security monitoring and threat detection
+                        </li>
+                        <li>
+                            <i class="fas fa-shield"></i>
+                            Regular penetration testing and security audits
+                        </li>
+                        <li>
+                            <i class="fas fa-shield"></i>
+                            Multi-factor authentication (MFA) support
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-user-check"></i>
+                    <h2>Your Rights</h2>
+                </div>
+                <div class="section-content">
+                    <p>Depending on your location, you may have the following rights:</p>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Right to Access:</strong> Request copies of your personal data
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Right to Rectification:</strong> Correct inaccurate data
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Right to Erasure:</strong> Request deletion of your data
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Right to Restrict Processing:</strong> Limit how we use your data
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Right to Data Portability:</strong> Receive your data in a structured format
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Right to Object:</strong> Object to certain types of processing
+                        </li>
+                    </ul>
+                    
+                    <div class="highlight-box">
+                        <p style="margin: 0;">
+                            <i class="fas fa-envelope" style="color: #0066ff; margin-right: 10px;"></i>
+                            To exercise your rights, contact us at <strong>privacy@cyberguard.com</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-globe"></i>
+                    <h2>International Data Transfers</h2>
+                </div>
+                <div class="section-content">
+                    <p>We operate globally and may transfer data to countries with different data protection laws. We ensure appropriate safeguards are in place through:</p>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Standard Contractual Clauses (SCCs)
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            EU-US Data Privacy Framework compliance
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Binding Corporate Rules
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-child"></i>
+                    <h2>Children's Privacy</h2>
+                </div>
+                <div class="section-content">
+                    <p>Our services are not intended for individuals under the age of 16. We do not knowingly collect personal information from children. If you believe we have inadvertently collected such information, please contact us immediately.</p>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-clock"></i>
+                    <h2>Data Retention</h2>
+                </div>
+                <div class="section-content">
+                    <p>We retain your personal information for as long as necessary to:</p>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Provide you with our services
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Comply with legal obligations (up to 7 years)
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Resolve disputes and enforce agreements
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <div class="section-header">
+                    <i class="fas fa-bell"></i>
+                    <h2>Changes to This Policy</h2>
+                </div>
+                <div class="section-content">
+                    <p>We may update this Privacy Policy periodically. We will notify you of material changes through:</p>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Email notification
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            In-platform notice
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Website banner
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h3>
+                    <i class="fas fa-headset"></i>
+                    Privacy Questions?
+                </h3>
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        privacy@cyberguard.com
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-phone"></i>
+                        +1 (888) 555-0123
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-building"></i>
+                        123 Security Ave, San Francisco, CA 94105
+                    </div>
+                </div>
+                <p style="color: #94a3b8; margin-top: 20px; font-size: 0.95rem;">
+                    <i class="fas fa-clock"></i> Response time: Within 24 hours
+                </p>
+            </div>
+        </div>
+
+        <div class="legal-footer">
+            <p>© 2026 CyberGuard - NINE Security. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <i class="fas fa-shield"></i> Protecting your privacy is our mission
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

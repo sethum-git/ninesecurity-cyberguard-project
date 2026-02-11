@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard | Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="logo-loader" id="logoLoader">
+        <div class="logo-animation">
+            <div class="logo-container">
+                <img src="logo.png" alt="CyberGuard Logo" class="animated-logo">
+            </div>
+        </div>
+    </div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo-section">
+                <a href="index.html" class="logo-link">
+                    <div class="logo-icon">
+                        <img src="logo.png" alt="CyberGuard Logo" class="logo-img">
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="logo-title">CyberGuard</h1>
+                        <p class="logo-subtitle">Threat Report Platform</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="report.html" class="nav-link">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Report Incident</span>
+                </a>
+                <a href="incidents.html" class="nav-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Incidents</span>
+                    <span class="badge">12</span>
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </div>
+
+            <div class="user-section">
+                <div class="notification-container">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+
+                <div class="profile-container" id="profileContainer">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="profile-avatar">AF</div>
+                        <div class="profile-info">
+                            <span class="profile-name">Amal Fernando</span>
+                            <span class="profile-role">Administrator</span>
+                        </div>
+                        <i class="fas fa-chevron-down" id="profileArrow"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="profile.html" class="dropdown-item">
+                            <i class="fas fa-user-circle"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-user-info">
+                    <div class="mobile-avatar">AF</div>
+                    <div>
+                        <p class="mobile-user-name">Amal Fernando</p>
+                        <p class="mobile-user-role">Administrator</p>
+                    </div>
+                </div>
+                <button class="mobile-close-btn" id="mobileCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-nav-links">
+                <a href="index.html" class="mobile-nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="report.html" class="mobile-nav-link">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Report Incident</span>
+                </a>
+                <a href="incidents.html" class="mobile-nav-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Incidents</span>
+                </a>
+                <a href="analytics.html" class="mobile-nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="profile.html" class="mobile-nav-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="mobile-nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            
+            <div class="mobile-nav-footer">
+                <button class="mobile-logout-btn" id="mobileLogoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="atr-background" id="atrBackground"></div>
+    <script src="atr-background.js"></script>
+    <main class="main-content">
+        <div class="container">
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Combat Cyber Threats in Real-Time</h1>
+        <p class="hero-description">
+            Report, track, and analyze cyber incidents with our secure platform. 
+            Help organizations stay ahead of digital threats and protect against 
+            growing cybercrime activities.
+        </p>
+        <div class="hero-actions">
+            <div class="hero-buttons">
+                <a href="report.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="btn-text">Report New Incident</span>
+                    <span class="btn-subtext">Submit a security threat report</span>
+                </a>
+                <a href="incidents.html" class="btn btn-secondary btn-large">
+                    <i class="fas fa-eye"></i>
+                    <span class="btn-text">View All Incidents</span>
+                    <span class="btn-subtext">Track ongoing investigations</span>
+                </a>
+                <a href="threat-map.html" class="btn btn-secondary btn-large">
+                    <i class="fas fa-eye"></i>
+                    <span class="btn-text">Live - Threat - Map</span>
+                    <span class="btn-subtext">Track ongoing attacks</span>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 class="stat-number">24</h3>
+                        <p class="stat-label">Critical Threats</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 class="stat-number">156</h3>
+                        <p class="stat-label">Total Incidents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="cyber-shield-container">
+            <div class="cyber-shield">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="shield-ring ring-1"></div>
+            <div class="shield-ring ring-2"></div>
+            <div class="shield-ring ring-3"></div>
+            
+            <div class="floating-dot" style="top: 20%; left: 15%;"></div>
+            <div class="floating-dot" style="top: 70%; right: 10%;"></div>
+            <div class="floating-dot" style="bottom: 40%; left: 25%;"></div>
+        </div>
+    </div>
+</section>
+
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <a href="report.html" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h3>Report Incident</h3>
+                        <p>Submit a new cyber threat report with evidence</p>
+                    </a>
+                    <a href="analytics.html" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3>View Analytics</h3>
+                        <p>Analyze threat patterns and statistics</p>
+                    </a>
+                    <a href="incidents.html" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                        <h3>Track Incidents</h3>
+                        <p>Monitor ongoing investigations and status</p>
+                    </a>
+                    <a href="teams.html" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3>Manage Team</h3>
+                        <p>Assign tasks and manage security team</p>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Logo Section -->
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <img src="logo.png" alt="CyberGuard Logo" class="footer-logo-img">
+                    </div>
+                    <div class="footer-logo-text">
+                        <h3>CyberGuard</h3>
+                        <p>Threat Report Platform</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="security-guidelines.html">Security Guidelines</a>
+                    <a href="contact-support.html">Contact Support</a>
+                </div>
+
+                <div class="footer-copyright">
+                    <p>&copy; 2026 NINE Security. All rights reserved.</p>
+                    <p class="footer-tagline">Combatting cybercrime through collective intelligence</p>
+                    <p class="footer-tagline"></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        'use strict';
+        
+        console.log('🚀 CyberGuard Platform Loading...');
+        
+        function fixLoadingScreen() {
+            const loader = document.getElementById('logoLoader');
+            if (loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }, 500);
+                }, 2000);
+                
+                setTimeout(() => {
+                    if (loader.style.display !== 'none') {
+                        loader.style.display = 'none';
+                    }
+                }, 3000);
+            }
+        }
+        
+        function fixLogout() {
+            function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    
+                    window.location.href = 'login.html';
+                }
+            }
+            
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    logout();
+                });
+            }
+            
+            const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+            if (mobileLogoutBtn) {
+                mobileLogoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    logout();
+                });
+            }
+        }
+        
+        function fixMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+            const menuIcon = document.getElementById('menuIcon');
+            
+            if (mobileMenuBtn && mobileNav) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileNav.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                });
+                
+                mobileCloseBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                });
+            }
+        }
+        
+        function fixProfileDropdown() {
+            const profileBtn = document.getElementById('profileBtn');
+            const profileContainer = document.getElementById('profileContainer');
+            
+            if (profileBtn && profileContainer) {
+                profileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    profileContainer.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!profileContainer.contains(e.target)) {
+                        profileContainer.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ DOM Loaded - Initializing fixes');
+            
+            fixLoadingScreen();
+            fixLogout();
+            fixMobileMenu();
+            fixProfileDropdown();
+            
+            console.log('✅ All fixes applied successfully');
+        });
+        
+        setTimeout(() => {
+            const loader = document.getElementById('logoLoader');
+            if (loader && loader.style.display !== 'none') {
+                loader.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }, 3500);
+        
+    })();
+    </script>
+
+<script src="common.js"></script> 
+<script src="script.js"></script> 
+</body>
+</html>

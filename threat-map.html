@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard • 3D Threat Intelligence Globe</title>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/",
+                "three/orbitcontrols": "https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #0a0e17 0%, #030507 100%);
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 80px 120px, #fff, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            animation: starsMove 60s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes starsMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-200px); }
+        }
+        .map-nav {
+            background: rgba(5, 7, 12, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0066ff, #00d4aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #0066ff;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 30px;
+            color: #ef4444;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .globe-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 25px;
+            max-width: 1600px;
+            margin: 90px auto 30px;
+            padding: 0 30px;
+            min-height: calc(100vh - 120px);
+        }
+
+        .canvas-wrapper {
+            background: rgba(5, 7, 12, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .globe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 10;
+            background: rgba(5, 7, 12, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .globe-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .globe-title i {
+            color: #0066ff;
+            font-size: 1.2rem;
+        }
+
+        .globe-title h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .globe-controls {
+            display: flex;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 6px 14px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 102, 255, 0.15);
+            border-color: #0066ff;
+            color: #fff;
+        }
+
+        #globeCanvas {
+            width: 100%;
+            height: 650px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: radial-gradient(circle at 30% 30%, #0a1a2a, #030712);
+            cursor: grab;
+        }
+
+        #globeCanvas:active {
+            cursor: grabbing;
+        }
+
+        .stats-panel {
+            background: rgba(5, 7, 12, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            height: fit-content;
+        }
+
+        .global-stats {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 212, 170, 0.2));
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .global-stats::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,102,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .global-stats h3 {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .attack-counter {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 5px;
+            position: relative;
+            font-family: 'Inter', monospace;
+        }
+
+        .attack-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .threat-meter {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .threat-fill {
+            height: 100%;
+            width: 78%;
+            background: linear-gradient(90deg, #0066ff, #00d4aa);
+            border-radius: 3px;
+            animation: meterGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes meterGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; box-shadow: 0 0 10px #0066ff; }
+        }
+
+        .attack-list-container {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .attack-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .attack-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .attack-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .attack-grid::-webkit-scrollbar-thumb {
+            background: #0066ff;
+            border-radius: 2px;
+        }
+
+        .attack-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attack-card:hover {
+            background: rgba(0, 102, 255, 0.1);
+            border-color: #0066ff;
+            transform: translateX(5px);
+        }
+
+        .attack-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: #ef4444;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .attack-card:hover::before {
+            opacity: 1;
+        }
+
+        .attack-rank {
+            width: 28px;
+            height: 28px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0066ff;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .attack-info {
+            flex: 1;
+        }
+
+        .attack-country {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+
+        .attack-stats {
+            display: flex;
+            gap: 12px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        .attack-count {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .attack-trend {
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .live-feed {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feed-header h3 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #10b981;
+            font-size: 0.8rem;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .feed-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .feed-stream::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .feed-stream::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .feed-stream::-webkit-scrollbar-thumb {
+            background: #00d4aa;
+            border-radius: 2px;
+        }
+
+        .feed-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            animation: slideInRight 0.5s ease;
+            border-left: 3px solid;
+        }
+
+        .feed-item.critical { border-left-color: #ef4444; }
+        .feed-item.high { border-left-color: #f59e0b; }
+        .feed-item.medium { border-left-color: #0066ff; }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .feed-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feed-content {
+            flex: 1;
+        }
+
+        .feed-title {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feed-meta {
+            display: flex;
+            gap: 8px;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+        }
+
+        .feed-time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #64748b;
+            font-size: 0.7rem;
+        }
+
+        .threat-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .threat-badge {
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .threat-badge i {
+            font-size: 0.8rem;
+        }
+
+        .threat-badge .count {
+            color: #fff;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        @media (max-width: 1200px) {
+            .globe-container {
+                grid-template-columns: 1fr;
+            }
+            
+            #globeCanvas {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .globe-container {
+                margin-top: 140px;
+                padding: 0 15px;
+            }
+            
+            .globe-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                top: 15px;
+                left: 15px;
+                right: 15px;
+            }
+            
+            .attack-counter {
+                font-size: 3rem;
+            }
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030712;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 102, 255, 0.2);
+            border-top: 3px solid #0066ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0066ff, #00d4aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+.footer {
+    background: var(--darker-bg);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-logo-icon {
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 5px;
+    filter: brightness(0) invert(1);
+}
+
+.footer-logo:hover .footer-logo-img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.footer-logo h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.footer-logo p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-copyright {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.footer-tagline {
+    font-size: 0.8rem;
+    margin-top: 8px;
+    color: var(--text-secondary);
+}
+    </style>
+</head>
+<body>
+    <div class="starfield"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Initializing 3D Globe...</div>
+        </div>
+    </div>
+
+    <nav class="map-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="CyberGuard" onerror="this.src='https://via.placeholder.com/35x35/0066ff/ffffff?text=CG'">
+                <span>CyberGuard</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">
+                    <i class="fas fa-home"></i> Portal
+                </a>
+                <a href="threat-map-3d.html" class="active">
+                    <i class="fas fa-globe-americas"></i> 3D Globe
+                </a>
+                <a href="analytics.html">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </a>
+                <a href="privacy-policy.html">
+                    <i class="fas fa-shield"></i> Legal
+                </a>
+            </div>
+            <div class="live-badge">
+                <span class="pulse-dot"></span>
+                3D LIVE
+            </div>
+        </div>
+    </nav>
+
+    <div class="globe-container">
+        <div class="canvas-wrapper">
+            <div class="globe-header">
+                <div class="globe-title">
+                    <i class="fas fa-globe-americas"></i>
+                    <h2>3D Cyber Threat Intelligence Globe</h2>
+                </div>
+                <div class="globe-controls">
+                    <button class="control-btn" id="autoRotateBtn">
+                        <i class="fas fa-play"></i> Auto-Rotate
+                    </button>
+                    <button class="control-btn" id="resetViewBtn">
+                        <i class="fas fa-home"></i> Reset
+                    </button>
+                </div>
+            </div>
+            <div id="globeCanvas"></div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="global-stats">
+                <h3>GLOBAL THREAT LEVEL</h3>
+                <div class="attack-counter" id="globalAttacks">78,492</div>
+                <div class="attack-label">Attacks Today</div>
+                <div class="threat-meter">
+                    <div class="threat-fill" style="width: 78%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; color: #94a3b8; font-size: 0.85rem; margin-top: 15px;">
+                    <span>Threat Level: <span style="color: #ef4444; font-weight: 700;">CRITICAL</span></span>
+                    <span><i class="fas fa-arrow-up" style="color: #10b981;"></i> +12.4%</span>
+                </div>
+            </div>
+
+            <div class="attack-list-container">
+                <div class="section-header">
+                    <h3><i class="fas fa-crosshairs"></i> Top Attack Origins</h3>
+                    <span style="color: #0066ff; font-size: 0.8rem;">Live</span>
+                </div>
+                <div class="attack-grid" id="topOrigins">
+                </div>
+            </div>
+
+            <div class="attack-list-container">
+                <div class="section-header">
+                    <h3><i class="fas fa-chart-pie"></i> Attack Distribution</h3>
+                </div>
+                <div class="threat-badges" id="threatBadges">
+                </div>
+            </div>
+
+            <div class="live-feed">
+                <div class="feed-header">
+                    <h3><i class="fas fa-bolt"></i> Live Attack Feed</h3>
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        STREAMING
+                    </div>
+                </div>
+                <div class="feed-stream" id="liveFeed">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        class CyberGlobe3D {
+            constructor() {
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.controls = null;
+                this.globe = null;
+                this.markers = [];
+                this.attackArcs = [];
+                this.particles = [];
+                
+                this.init();
+                this.createGlobe();
+                this.createAtmosphere();
+                this.createStars();
+                this.createAttackMarkers();
+                this.createAttackArcs();
+                this.createDataParticles();
+                this.animate();
+            }
+
+            init() {
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x030712);
+                this.scene.fog = new THREE.Fog(0x030712, 10, 50);
+
+                this.camera = new THREE.PerspectiveCamera(45, document.getElementById('globeCanvas').clientWidth / document.getElementById('globeCanvas').clientHeight, 0.1, 1000);
+                this.camera.position.set(0, 1, 15);
+                this.camera.lookAt(0, 0, 0);
+
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+                this.renderer.setSize(document.getElementById('globeCanvas').clientWidth, document.getElementById('globeCanvas').clientHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                document.getElementById('globeCanvas').appendChild(this.renderer.domElement);
+
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+                this.controls.dampingFactor = 0.05;
+                this.controls.rotateSpeed = 0.8;
+                this.controls.autoRotate = true;
+                this.controls.autoRotateSpeed = 1.5;
+                this.controls.enableZoom = true;
+                this.controls.enablePan = false;
+                this.controls.enableTilt = true;
+                this.controls.minDistance = 8;
+                this.controls.maxDistance = 25;
+                this.controls.rotateDuration = 1;
+
+                const ambientLight = new THREE.AmbientLight(0x404060);
+                this.scene.add(ambientLight);
+
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                mainLight.position.set(5, 3, 8);
+                mainLight.castShadow = true;
+                mainLight.receiveShadow = true;
+                this.scene.add(mainLight);
+
+                const backLight = new THREE.DirectionalLight(0x4466aa, 0.5);
+                backLight.position.set(-5, 0, -8);
+                this.scene.add(backLight);
+
+                const fillLight = new THREE.PointLight(0x3366aa, 0.3);
+                fillLight.position.set(0, 5, 5);
+                this.scene.add(fillLight);
+
+            }
+
+            createGlobe() {
+                const textureLoader = new THREE.TextureLoader();
+                
+                const geometry = new THREE.SphereGeometry(5, 64, 64);
+                
+                const colorMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+                const specularMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg');
+                const normalMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
+                const cloudMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png');
+
+                const material = new THREE.MeshPhongMaterial({
+                    map: colorMap,
+                    specularMap: specularMap,
+                    specular: new THREE.Color('grey'),
+                    shininess: 5,
+                    normalMap: normalMap,
+                    emissive: new THREE.Color(0x112244),
+                    emissiveIntensity: 0.1
+                });
+
+                this.globe = new THREE.Mesh(geometry, material);
+                this.globe.castShadow = true;
+                this.globe.receiveShadow = true;
+                this.scene.add(this.globe);
+
+                const cloudGeometry = new THREE.SphereGeometry(5.01, 64, 64);
+                const cloudMaterial = new THREE.MeshPhongMaterial({
+                    map: cloudMap,
+                    transparent: true,
+                    opacity: 0.3,
+                    blending: THREE.AdditiveBlending,
+                    side: THREE.DoubleSide
+                });
+                
+                const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+                this.globe.add(clouds);
+                
+                clouds.userData = { speed: 0.001 };
+                
+                const glowGeometry = new THREE.SphereGeometry(5.1, 64, 64);
+                const glowMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x0066ff,
+                    transparent: true,
+                    opacity: 0.05,
+                    wireframe: true
+                });
+                
+                const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+                this.globe.add(glow);
+            }
+
+            createAtmosphere() {
+                const atmosphereGeometry = new THREE.SphereGeometry(5.2, 64, 64);
+                const atmosphereMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x3366aa,
+                    transparent: true,
+                    opacity: 0.08,
+                    side: THREE.DoubleSide
+                });
+                
+                const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+                this.globe.add(atmosphere);
+            }
+
+            createStars() {
+                const starsGeometry = new THREE.BufferGeometry();
+                const starsCount = 3000;
+                const starsPositions = new Float32Array(starsCount * 3);
+
+                for (let i = 0; i < starsCount * 3; i += 3) {
+                    starsPositions[i] = (Math.random() - 0.5) * 200;
+                    starsPositions[i + 1] = (Math.random() - 0.5) * 200;
+                    starsPositions[i + 2] = (Math.random() - 0.5) * 200 - 50;
+                }
+
+                starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+
+                const starsMaterial = new THREE.PointsMaterial({
+                    color: 0xffffff,
+                    size: 0.2,
+                    transparent: true,
+                    opacity: 0.8,
+                    blending: THREE.AdditiveBlending
+                });
+
+                const stars = new THREE.Points(starsGeometry, starsMaterial);
+                this.scene.add(stars);
+            }
+
+            createAttackMarkers() {
+                const attackPoints = [
+                    { lat: 40.7128, lng: -74.0060, intensity: 1.0, country: "USA", attacks: 1242 },     // New York
+                    { lat: 51.5074, lng: -0.1278, intensity: 0.9, country: "UK", attacks: 986 },        // London
+                    { lat: 48.8566, lng: 2.3522, intensity: 0.7, country: "France", attacks: 654 },     // Paris
+                    { lat: 55.7558, lng: 37.6173, intensity: 1.2, country: "Russia", attacks: 1452 },   // Moscow
+                    { lat: 35.6762, lng: 139.6503, intensity: 0.8, country: "Japan", attacks: 723 },    // Tokyo
+                    { lat: 31.2304, lng: 121.4737, intensity: 1.1, country: "China", attacks: 1123 },   // Shanghai
+                    { lat: 28.6139, lng: 77.2090, intensity: 0.9, country: "India", attacks: 887 },     // New Delhi
+                    { lat: -23.5505, lng: -46.6333, intensity: 0.6, country: "Brazil", attacks: 432 },  // Sao Paulo
+                    { lat: 37.7749, lng: -122.4194, intensity: 0.8, country: "USA", attacks: 892 },     // San Francisco
+                    { lat: 50.1109, lng: 8.6821, intensity: 0.7, country: "Germany", attacks: 567 },    // Frankfurt
+                    { lat: 1.3521, lng: 103.8198, intensity: 0.6, country: "Singapore", attacks: 345 }, // Singapore
+                    { lat: -33.8688, lng: 151.2093, intensity: 0.5, country: "Australia", attacks: 234 } // Sydney
+                ];
+
+                attackPoints.forEach(point => {
+                    const phi = (90 - point.lat) * Math.PI / 180;
+                    const theta = point.lng * Math.PI / 180;
+                    
+                    const x = 5.2 * Math.sin(phi) * Math.cos(theta);
+                    const y = 5.2 * Math.cos(phi);
+                    const z = 5.2 * Math.sin(phi) * Math.sin(theta);
+
+                    const markerGroup = new THREE.Group();
+                    markerGroup.position.set(x, y, z);
+
+                    const coreGeometry = new THREE.SphereGeometry(0.08 * point.intensity, 16, 16);
+                    const coreMaterial = new THREE.MeshBasicMaterial({
+                        color: 0xef4444,
+                        emissive: 0xef4444,
+                        emissiveIntensity: 0.5
+                    });
+                    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+                    markerGroup.add(core);
+
+                    const ringGeometry = new THREE.TorusGeometry(0.15 * point.intensity, 0.02, 16, 32);
+                    const ringMaterial = new THREE.MeshBasicMaterial({
+                        color: 0xef4444,
+                        transparent: true,
+                        opacity: 0.3,
+                        side: THREE.DoubleSide
+                    });
+                    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                    ring.rotation.x = Math.PI / 2;
+                    ring.rotation.z = Math.PI / 4;
+                    markerGroup.add(ring);
+
+                    const ring2 = new THREE.Mesh(ringGeometry, ringMaterial);
+                    ring2.rotation.x = Math.PI / 2;
+                    ring2.rotation.z = -Math.PI / 4;
+                    ring2.scale.set(1.2, 1.2, 1.2);
+                    ring2.material.opacity = 0.2;
+                    markerGroup.add(ring2);
+
+                    markerGroup.userData = {
+                        intensity: point.intensity,
+                        speed: 0.02 + Math.random() * 0.02,
+                        country: point.country,
+                        attacks: point.attacks,
+                        lat: point.lat,
+                        lng: point.lng
+                    };
+
+                    this.globe.add(markerGroup);
+                    this.markers.push(markerGroup);
+                });
+            }
+
+            createAttackArcs() {
+                const arcs = [
+                    { from: { lat: 55.7558, lng: 37.6173 }, to: { lat: 40.7128, lng: -74.0060 }, intensity: 1.0 }, // Moscow -> NY
+                    { from: { lat: 31.2304, lng: 121.4737 }, to: { lat: 37.7749, lng: -122.4194 }, intensity: 0.8 }, // Shanghai -> SF
+                    { from: { lat: 51.5074, lng: -0.1278 }, to: { lat: 28.6139, lng: 77.2090 }, intensity: 0.7 },    // London -> Delhi
+                    { from: { lat: 55.7558, lng: 37.6173 }, to: { lat: 48.8566, lng: 2.3522 }, intensity: 0.9 },     // Moscow -> Paris
+                    { from: { lat: 35.6762, lng: 139.6503 }, to: { lat: 1.3521, lng: 103.8198 }, intensity: 0.6 }     // Tokyo -> Singapore
+                ];
+
+                arcs.forEach(arcData => {
+                    const fromPhi = (90 - arcData.from.lat) * Math.PI / 180;
+                    const fromTheta = arcData.from.lng * Math.PI / 180;
+                    const toPhi = (90 - arcData.to.lat) * Math.PI / 180;
+                    const toTheta = arcData.to.lng * Math.PI / 180;
+
+                    const fromX = 5.1 * Math.sin(fromPhi) * Math.cos(fromTheta);
+                    const fromY = 5.1 * Math.cos(fromPhi);
+                    const fromZ = 5.1 * Math.sin(fromPhi) * Math.sin(fromTheta);
+
+                    const toX = 5.1 * Math.sin(toPhi) * Math.cos(toTheta);
+                    const toY = 5.1 * Math.cos(toPhi);
+                    const toZ = 5.1 * Math.sin(toPhi) * Math.sin(toTheta);
+
+                    const midX = (fromX + toX) / 2;
+                    const midY = (fromY + toY) / 2;
+                    const midZ = (fromZ + toZ) / 2;
+                    
+                    const arcHeight = 2.0;
+                    const controlX = midX * (1 + arcHeight);
+                    const controlY = midY * (1 + arcHeight);
+                    const controlZ = midZ * (1 + arcHeight);
+
+                    const curve = new THREE.QuadraticBezierCurve3(
+                        new THREE.Vector3(fromX, fromY, fromZ),
+                        new THREE.Vector3(controlX, controlY, controlZ),
+                        new THREE.Vector3(toX, toY, toZ)
+                    );
+
+                    const tubeGeometry = new THREE.TubeGeometry(curve, 64, 0.02, 8, false);
+                    const tubeMaterial = new THREE.MeshPhongMaterial({
+                        color: 0xef4444,
+                        emissive: 0xef4444,
+                        emissiveIntensity: 0.2,
+                        transparent: true,
+                        opacity: 0.15,
+                        side: THREE.DoubleSide
+                    });
+
+                    const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
+                    this.globe.add(tube);
+                    this.attackArcs.push(tube);
+                });
+            }
+
+            createDataParticles() {
+                const particleCount = 200;
+                const particleGeometry = new THREE.BufferGeometry();
+                const particlePositions = new Float32Array(particleCount * 3);
+                const particleSpeeds = [];
+
+                for (let i = 0; i < particleCount * 3; i += 3) {
+                    const phi = Math.random() * Math.PI * 2;
+                    const theta = Math.random() * Math.PI * 2;
+                    
+                    particlePositions[i] = 6 * Math.sin(phi) * Math.cos(theta);
+                    particlePositions[i + 1] = 6 * Math.cos(phi);
+                    particlePositions[i + 2] = 6 * Math.sin(phi) * Math.sin(theta);
+                    
+                    particleSpeeds.push({
+                        speed: 0.001 + Math.random() * 0.002,
+                        direction: Math.random() * Math.PI * 2
+                    });
+                }
+
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+                const particleMaterial = new THREE.PointsMaterial({
+                    color: 0x00d4aa,
+                    size: 0.05,
+                    transparent: true,
+                    blending: THREE.AdditiveBlending,
+                    sizeAttenuation: true
+                });
+
+                const particles = new THREE.Points(particleGeometry, particleMaterial);
+                this.scene.add(particles);
+                
+                particles.userData = { speeds: particleSpeeds };
+                this.particles.push(particles);
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+
+                this.controls.update();
+
+                if (this.globe) {
+                    this.globe.children.forEach(child => {
+                        if (child.material && child.material.map && child.material.map.name && child.material.map.name.includes('cloud')) {
+                            child.rotation.y += 0.0005;
+                        }
+                    });
+                }
+
+                this.markers.forEach((marker, index) => {
+                    const time = Date.now() * marker.userData.speed;
+                    const scale = 1 + Math.sin(time) * 0.1;
+                    marker.children[1].scale.set(scale, scale, scale);
+                    marker.children[2].scale.set(scale * 1.2, scale * 1.2, scale * 1.2);
+                    
+                    marker.children[1].rotation.y += 0.01;
+                    marker.children[2].rotation.y -= 0.005;
+                });
+
+                this.particles.forEach(particles => {
+                    const positions = particles.geometry.attributes.position.array;
+                    for (let i = 0; i < positions.length; i += 3) {
+                        const x = positions[i];
+                        const y = positions[i + 1];
+                        const z = positions[i + 2];
+                        
+                        const speed = particles.userData.speeds[Math.floor(i / 3)]?.speed || 0.001;
+                        
+                        positions[i] = x * Math.cos(speed) - z * Math.sin(speed);
+                        positions[i + 2] = x * Math.sin(speed) + z * Math.cos(speed);
+                    }
+                    particles.geometry.attributes.position.needsUpdate = true;
+                });
+
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        const attackOrigins = [
+            { country: "United States", code: "US", attacks: 1242, trend: +12, flag: "🇺🇸" },
+            { country: "Russia", code: "RU", attacks: 1086, trend: +18, flag: "🇷🇺" },
+            { country: "China", code: "CN", attacks: 986, trend: +15, flag: "🇨🇳" },
+            { country: "Germany", code: "DE", attacks: 654, trend: +5, flag: "🇩🇪" },
+            { country: "United Kingdom", code: "GB", attacks: 587, trend: +8, flag: "🇬🇧" },
+            { country: "India", code: "IN", attacks: 498, trend: +22, flag: "🇮🇳" },
+            { country: "Brazil", code: "BR", attacks: 432, trend: +14, flag: "🇧🇷" },
+            { country: "Japan", code: "JP", attacks: 389, trend: -2, flag: "🇯🇵" }
+        ];
+
+        const threatTypes = [
+            { name: "Phishing", icon: "fa-fish", count: "2,842", color: "#ef4444" },
+            { name: "Malware", icon: "fa-virus", count: "2,156", color: "#f59e0b" },
+            { name: "DDoS", icon: "fa-server", count: "1,874", color: "#0066ff" },
+            { name: "Ransomware", icon: "fa-skull", count: "1,245", color: "#8b5cf6" },
+            { name: "Botnet", icon: "fa-network-wired", count: "876", color: "#ec4899" },
+            { name: "Zero-Day", icon: "fa-bug", count: "432", color: "#00d4aa" }
+        ];
+
+        const liveAttacks = [
+            { type: "critical", icon: "fa-skull", title: "Ransomware Attack", country: "🇺🇸 USA", target: "Healthcare", time: "Just now" },
+            { type: "high", icon: "fa-fish", title: "Phishing Campaign", country: "🇩🇪 Germany", target: "Banking", time: "12s ago" },
+            { type: "critical", icon: "fa-database", title: "Data Breach", country: "🇬🇧 UK", target: "Tech", time: "24s ago" },
+            { type: "high", icon: "fa-virus", title: "Malware Outbreak", country: "🇧🇷 Brazil", target: "Government", time: "36s ago" },
+            { type: "medium", icon: "fa-server", title: "DDoS Attack", country: "🇯🇵 Japan", target: "E-commerce", time: "48s ago" },
+            { type: "high", icon: "fa-shield", title: "APT Activity", country: "🇨🇳 China", target: "Military", time: "57s ago" }
+        ];
+
+        function populateStats() {
+            const topOrigins = document.getElementById('topOrigins');
+            if (topOrigins) {
+                topOrigins.innerHTML = attackOrigins
+                    .sort((a, b) => b.attacks - a.attacks)
+                    .map((origin, index) => `
+                        <div class="attack-card">
+                            <div class="attack-rank">${index + 1}</div>
+                            <div class="attack-info">
+                                <div class="attack-country">${origin.flag} ${origin.country}</div>
+                                <div class="attack-stats">
+                                    <span class="attack-count">${origin.attacks.toLocaleString()} attacks</span>
+                                    <span class="attack-trend">
+                                        <i class="fas fa-arrow-${origin.trend > 0 ? 'up' : 'down'}"></i>
+                                        ${Math.abs(origin.trend)}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+            }
+
+            const threatBadges = document.getElementById('threatBadges');
+            if (threatBadges) {
+                threatBadges.innerHTML = threatTypes.map(type => `
+                    <div class="threat-badge">
+                        <i class="fas ${type.icon}" style="color: ${type.color};"></i>
+                        <span>${type.name}</span>
+                        <span class="count">${type.count}</span>
+                    </div>
+                `).join('');
+            }
+
+            const liveFeed = document.getElementById('liveFeed');
+            if (liveFeed) {
+                liveFeed.innerHTML = liveAttacks.map(attack => `
+                    <div class="feed-item ${attack.type}">
+                        <div class="feed-icon">
+                            <i class="fas ${attack.icon}" style="color: ${
+                                attack.type === 'critical' ? '#ef4444' : 
+                                attack.type === 'high' ? '#f59e0b' : '#0066ff'
+                            };"></i>
+                        </div>
+                        <div class="feed-content">
+                            <div class="feed-title">${attack.title}</div>
+                            <div class="feed-meta">
+                                <span>${attack.country}</span>
+                                <span>•</span>
+                                <span>${attack.target}</span>
+                            </div>
+                            <div class="feed-time">
+                                <i class="fas fa-clock"></i>
+                                <span>${attack.time}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function startLiveUpdates() {
+            let attackCount = 78492;
+            setInterval(() => {
+                attackCount += Math.floor(Math.random() * 20) + 5;
+                document.getElementById('globalAttacks').textContent = attackCount.toLocaleString();
+            }, 2500);
+
+            setInterval(() => {
+                const feed = document.getElementById('liveFeed');
+                if (!feed) return;
+                
+                const countries = ["🇨🇦 Canada", "🇦🇺 Australia", "🇮🇹 Italy", "🇪🇸 Spain", "🇸🇪 Sweden", "🇸🇬 Singapore"];
+                const targets = ["Cloud Service", "Financial", "Government", "Healthcare", "Education", "Manufacturing"];
+                const attackTypes_list = [
+                    { type: "critical", icon: "fa-skull", title: "Ransomware" },
+                    { type: "high", icon: "fa-fish", title: "Phishing" },
+                    { type: "high", icon: "fa-virus", title: "Malware" },
+                    { type: "medium", icon: "fa-server", title: "DDoS" }
+                ];
+                
+                const randomAttack = attackTypes_list[Math.floor(Math.random() * attackTypes_list.length)];
+                
+                const newItem = document.createElement('div');
+                newItem.className = `feed-item ${randomAttack.type}`;
+                newItem.innerHTML = `
+                    <div class="feed-icon">
+                        <i class="fas ${randomAttack.icon}" style="color: ${
+                            randomAttack.type === 'critical' ? '#ef4444' : 
+                            randomAttack.type === 'high' ? '#f59e0b' : '#0066ff'
+                        };"></i>
+                    </div>
+                    <div class="feed-content">
+                        <div class="feed-title">${randomAttack.title} Attack</div>
+                        <div class="feed-meta">
+                            <span>${countries[Math.floor(Math.random() * countries.length)]}</span>
+                            <span>•</span>
+                            <span>${targets[Math.floor(Math.random() * targets.length)]}</span>
+                        </div>
+                        <div class="feed-time">
+                            <i class="fas fa-clock"></i>
+                            <span>Just now</span>
+                        </div>
+                    </div>
+                `;
+                
+                newItem.style.animation = 'slideInRight 0.5s ease';
+                feed.insertBefore(newItem, feed.firstChild);
+                
+                if (feed.children.length > 6) {
+                    feed.removeChild(feed.lastChild);
+                }
+            }, 4000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const globe = new CyberGlobe3D();
+            
+            populateStats();
+            
+            startLiveUpdates();
+            
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 1000);
+            }, 2000);
+
+            document.getElementById('autoRotateBtn').addEventListener('click', function() {
+                globe.controls.autoRotate = !globe.controls.autoRotate;
+                this.innerHTML = globe.controls.autoRotate ? 
+                    '<i class="fas fa-pause"></i> Pause Rotation' : 
+                    '<i class="fas fa-play"></i> Auto-Rotate';
+            });
+
+            document.getElementById('resetViewBtn').addEventListener('click', function() {
+                globe.camera.position.set(0, 1, 15);
+                globe.controls.target.set(0, 0, 0);
+                globe.controls.update();
+            });
+
+            window.addEventListener('resize', () => {
+                const width = document.getElementById('globeCanvas').clientWidth;
+                const height = document.getElementById('globeCanvas').clientHeight;
+                
+                globe.camera.aspect = width / height;
+                globe.camera.updateProjectionMatrix();
+                globe.renderer.setSize(width, height);
+            });
+        });
+    </script>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Logo Section -->
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <img src="logo.png" alt="CyberGuard Logo" class="footer-logo-img">
+                    </div>
+                    <div class="footer-logo-text">
+                        <h3>CyberGuard</h3>
+                        <p>Threat Report Platform</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="security-guidelines.html">Security Guidelines</a>
+                    <a href="contact-support.html">Contact Support</a>
+                </div>
+
+                <div class="footer-copyright">
+                    <p>&copy; 2026 NINE Security. All rights reserved.</p>
+                    <p class="footer-tagline">Combatting cybercrime through collective intelligence</p>
+                    <p class="footer-tagline"></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

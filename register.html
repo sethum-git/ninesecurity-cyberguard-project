@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard • Secure Access Portal</title>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="atr-background" id="atrBackground"></div>
+    <script src="atr-background.js"></script>
+    <div class="bg-mesh"></div>
+    <div class="grid-overlay"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    
+    <div class="portal-container">
+        <div class="threat-panel">
+            <div class="threat-header">
+                <div class="live-badge">
+                    <span class="pulse-dot"></span>
+                    LIVE THREAT MAP
+                </div>
+                <div class="threat-time">
+                    <i class="far fa-clock"></i>
+                    <span id="liveTime">15:24:37 UTC</span>
+                </div>
+            </div>
+            
+            <div class="threat-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Active Threats</div>
+                    <div class="stat-value">1,284</div>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> +12%
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Blocked Today</div>
+                    <div class="stat-value">8,492</div>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-shield"></i> +24%
+                    </div>
+                </div>
+            </div>
+            
+            <div class="threat-list">
+                <div class="threat-item critical">
+                    <div class="threat-icon">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <div class="threat-info">
+                        <div class="threat-name">Ransomware Campaign</div>
+                        <div class="threat-source">Targeting Healthcare</div>
+                    </div>
+                    <div class="threat-severity">Critical</div>
+                </div>
+                
+                <div class="threat-item high">
+                    <div class="threat-icon">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="threat-info">
+                        <div class="threat-name">Phishing Attack</div>
+                        <div class="threat-source">Finance Department</div>
+                    </div>
+                    <div class="threat-severity">High</div>
+                </div>
+                
+                <div class="threat-item medium">
+                    <div class="threat-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="threat-info">
+                        <div class="threat-name">DDoS Attempt</div>
+                        <div class="threat-source">Infrastructure</div>
+                    </div>
+                    <div class="threat-severity">Medium</div>
+                </div>
+            </div>
+            
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <i class="fas fa-robot"></i>
+                    <span>AI THREAT PREDICTION</span>
+                </div>
+                <div class="prediction-content">
+                    <div class="prediction-title">Data Exfiltration Risk</div>
+                    <p>Unusual data transfer patterns detected from HR database</p>
+                    <div class="confidence-badge">68% Confidence</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="access-panel">
+            <div class="logo-section">
+                <div class="logo-wrapper">
+                    <div class="logo-ring"></div>
+                    <img src="logo.png" alt="CyberGuard Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/120x120/0066ff/ffffff?text=CG'">
+                </div>
+                <h1 class="logo-title">CyberGuard</h1>
+                <p class="logo-subtitle">Threat Report Platform</p>
+                
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>SECURE ACCESS PORTAL</span>
+                </div>
+            </div>
+            
+            <div class="access-actions">
+                <button class="action-btn primary" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span><a href="login.html">Secure Login</span></a>
+                    <div class="btn-glow"></div>
+                </button>
+                
+                <button class="action-btn secondary" id="requestBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Request Access</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+            
+            <div class="insights-panel">
+                <div class="insights-header">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Key Insights</span>
+                </div>
+                
+                <div class="insights-list">
+                    <div class="insight-item">
+                        <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+                        <span>Phishing attacks increased by 25% this month</span>
+                    </div>
+                    <div class="insight-item">
+                        <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                        <span>Response time improved by 15% compared to last month</span>
+                    </div>
+                    <div class="insight-item">
+                        <i class="fas fa-building" style="color: #f59e0b;"></i>
+                        <span>Finance department remains the primary target</span>
+                    </div>
+                    <div class="insight-item">
+                        <i class="fas fa-clock" style="color: #3b82f6;"></i>
+                        <span>Weekdays between 9 AM - 3 PM see peak attack times</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reports-panel">
+                <div class="reports-header">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Generate Reports</span>
+                </div>
+                
+                <div class="reports-grid">
+                    <button class="report-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Monthly Security Report</span>
+                    </button>
+                    <button class="report-btn">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Risk Assessment</span>
+                    </button>
+                    <button class="report-btn">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Compliance Report</span>
+                    </button>
+                    <button class="report-btn">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trend Analysis</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <span>AF</span>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Amal Fernando</div>
+                    <div class="user-role">Security Administrator</div>
+                </div>
+                <div class="user-status">
+                    <span class="status-dot"></span>
+                    Active
+                </div>
+            </div>
+            
+            <div class="portal-footer">
+                <p>© 2026 NINE Security. All rights reserved.</p>
+                <p class="footer-tagline">Combatting cybercrime through collective intelligence</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CyberGuard</title>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="logo-loader" id="logoLoader">
+        <div class="logo-animation">
+            <div class="logo-container">
+                <img src="logo.png" alt="CyberGuard Logo" class="animated-logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo-section">
+                <a href="index.html" class="logo-link">
+                    <div class="logo-icon">
+                        <img src="logo.png" alt="CyberGuard Logo" class="logo-img">
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="logo-title">CyberGuard</h1>
+                        <p class="logo-subtitle">Threat Report Platform</p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="report.html" class="nav-link">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Report Incident</span>
+                </a>
+                <a href="incidents.html" class="nav-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Incidents</span>
+                    <span class="badge">12</span>
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </div>
+            <!-- User Section -->
+            <div class="user-section">
+                <!-- Notifications -->
+                <div class="notification-container">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+
+                <!-- User Profile -->
+                <div class="profile-container" id="profileContainer">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="profile-avatar">AF</div>
+                        <div class="profile-info">
+                            <span class="profile-name">Amal Fernando</span>
+                            <span class="profile-role">Administrator</span>
+                        </div>
+                        <i class="fas fa-chevron-down" id="profileArrow"></i>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="profile.html" class="dropdown-item active">
+                            <i class="fas fa-user-circle"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="mobile-user-info">
+                    <div class="mobile-avatar">AF</div>
+                    <div>
+                        <p class="mobile-user-name">Amal Fernando</p>
+                        <p class="mobile-user-role">Administrator</p>
+                    </div>
+                </div>
+                <button class="mobile-close-btn" id="mobileCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-nav-links">
+                <a href="index.html" class="mobile-nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="report.html" class="mobile-nav-link">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Report Incident</span>
+                </a>
+                <a href="incidents.html" class="mobile-nav-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Incidents</span>
+                </a>
+                <a href="analytics.html" class="mobile-nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="profile.html" class="mobile-nav-link active">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="mobile-nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            
+            <div class="mobile-nav-footer">
+                <button class="mobile-logout-btn" id="mobileLogoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="atr-background" id="atrBackground"></div>
+    <script src="atr-background.js"></script>
+    <main class="profile-main">
+        <div class="container">
+            <div class="profile-header">
+                <div class="back-button">
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+                <div class="header-content">
+                    <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+                    <p>Manage your account information and security settings</p>
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-left">
+                    <div class="profile-card">
+                        <div class="profile-avatar-large">
+                            <div class="avatar-image">AF</div>
+                            <button class="avatar-edit-btn" id="avatarEditBtn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info-large">
+                            <h2>Amal Fernando</h2>
+                            <p class="profile-role-badge">Administrator</p>
+                            <p class="profile-email">amal.fernando@cyberguard.com</p>
+                            <p class="profile-membership">Member since: January 15, 2025</p>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <h3>145</h3>
+                                <p>Total Reports</p>
+                                <small class="stat-trend positive">+12 this month</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-card">
+                        <h3><i class="fas fa-shield-alt"></i> Security Status</h3>
+                        <div class="security-items">
+                            <div class="security-item">
+                                <i class="fas fa-check-circle verified"></i>
+                                <span>Email Verified</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-check-circle verified"></i>
+                                <span>2FA Enabled</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-exclamation-circle warning"></i>
+                                <span>Password Age: 90 days</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-check-circle verified"></i>
+                                <span>Last Login: Today</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary security-btn">
+                            <i class="fas fa-lock"></i>
+                            Update Security
+                        </button>
+                    </div>
+                </div>
+
+                <div class="profile-right">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                            <button class="btn btn-edit" id="editPersonalBtn">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Full Name</label>
+                                <p>Amal Fernando</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Email Address</label>
+                                <p>amal.fernando@cyberguard.com</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Phone Number</label>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Department</label>
+                                <p>Security Operations Center</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Job Title</label>
+                                <p>Senior Security Analyst</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Location</label>
+                                <p>New York, USA</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-cog"></i> Account Settings</h3>
+                        </div>
+                        <div class="settings-list">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Email Notifications</h4>
+                                    <p>Receive alerts about new incidents and updates</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>SMS Notifications</h4>
+                                    <p>Get critical alerts via text message</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Dark Mode</h4>
+                                    <p>Use dark theme across the platform</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Auto Logout</h4>
+                                    <p>Automatically logout after 30 minutes of inactivity</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <a href="#" class="btn btn-secondary btn-sm">View All</a>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Reported new incident #INC-1567</h4>
+                                    <p>Malware attack on main server</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Resolved incident #INC-1542</h4>
+                                    <p>Phishing campaign investigation completed</p>
+                                    <span class="activity-time">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Password updated</h4>
+                                    <p>Account security enhanced</p>
+                                    <span class="activity-time">3 days ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Generated monthly report</h4>
+                                    <p>Security analytics for January 2026</p>
+                                    <span class="activity-time">1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                        <button class="btn btn-danger" id="deleteAccountBtn">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Logo Section -->
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <img src="logo.png" alt="CyberGuard Logo" class="footer-logo-img">
+                    </div>
+                    <div class="footer-logo-text">
+                        <h3>CyberGuard</h3>
+                        <p>Threat Report Platform</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Security Guidelines</a>
+                    <a href="#">Contact Support</a>
+                </div>
+
+                <div class="footer-copyright">
+                    <p>&copy; 2026 NINE Security. All rights reserved.</p>
+                    <p class="footer-tagline">Combatting cybercrime through collective intelligence</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .profile-main {
+            padding: 40px 0;
+            min-height: calc(100vh - 70px - 120px);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .back-button {
+            order: 2;
+        }
+
+        @media (min-width: 768px) {
+            .back-button {
+                order: 1;
+            }
+            
+            .header-content {
+                order: 2;
+                flex: 1;
+                text-align: center;
+            }
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .header-content h1 i {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+
+        .header-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .profile-content {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-avatar-large {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar-image {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto;
+        }
+
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .avatar-edit-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .profile-info-large h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .profile-role-badge {
+            display: inline-block;
+            background: rgba(0, 102, 255, 0.2);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+        }
+
+        .profile-email {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .profile-membership {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .stat-item h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .security-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .security-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .security-card h3 i {
+            color: var(--primary-color);
+        }
+
+        .security-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+        }
+
+        .security-item i {
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        .security-item i.verified {
+            color: var(--success-color);
+        }
+
+        .security-item i.warning {
+            color: var(--warning-color);
+        }
+
+        .security-item span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .security-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h3 i {
+            color: var(--primary-color);
+        }
+
+        .btn-edit {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .info-item p {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+        }
+
+        /* Settings List */
+        .settings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+        }
+
+        .setting-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .setting-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .setting-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--card-border);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .activity-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--card-border);
+            flex-wrap: wrap;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
+            color: white;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #ff6b6b, var(--danger-color));
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-content h1 {
+                justify-content: flex-start;
+                font-size: 2rem;
+            }
+            
+            .header-content p {
+                text-align: left;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .profile-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .setting-item .switch {
+                align-self: flex-end;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('logoLoader');
+            
+            setTimeout(function() {
+                if (loader) {
+                    loader.style.opacity = '0';
+                    loader.style.transition = 'opacity 0.5s ease';
+                    
+                    setTimeout(function() {
+                        loader.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }, 500);
+                }
+            }, 2000);
+            
+            setTimeout(function() {
+                if (loader && loader.style.display !== 'none') {
+                    loader.style.display = 'none';
+                    loader.style.opacity = '0';
+                    document.body.style.overflow = 'auto';
+                }
+            }, 3000);
+            
+            document.body.style.overflow = 'hidden';
+        });
+
+        (function() {
+            'use strict';
+            
+            console.log('🚀 Profile Page Loading...');
+            
+            function fixLoadingScreen() {
+                const loader = document.getElementById('logoLoader');
+                if (loader) {
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            document.body.style.overflow = 'auto';
+                        }, 500);
+                    }, 2000);
+                    
+                    setTimeout(() => {
+                        if (loader.style.display !== 'none') {
+                            loader.style.display = 'none';
+                        }
+                    }, 3000);
+                }
+            }
+            
+            function fixLogout() {
+                function logout() {
+                    if (confirm('Are you sure you want to logout?')) {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.href = 'login.html';
+                    }
+                }
+                
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        logout();
+                    });
+                }
+                
+                const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+                if (mobileLogoutBtn) {
+                    mobileLogoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        logout();
+                    });
+                }
+            }
+            
+            function fixMobileMenu() {
+                const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                const mobileNav = document.getElementById('mobileNav');
+                const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+                const menuIcon = document.getElementById('menuIcon');
+                
+                if (mobileMenuBtn && mobileNav) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileNav.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        menuIcon.classList.remove('fa-bars');
+                        menuIcon.classList.add('fa-times');
+                    });
+                    
+                    mobileCloseBtn.addEventListener('click', () => {
+                        mobileNav.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        menuIcon.classList.remove('fa-times');
+                        menuIcon.classList.add('fa-bars');
+                    });
+                }
+            }
+            
+            function fixProfileDropdown() {
+                const profileBtn = document.getElementById('profileBtn');
+                const profileContainer = document.getElementById('profileContainer');
+                
+                if (profileBtn && profileContainer) {
+                    profileBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        profileContainer.classList.toggle('active');
+                    });
+                    
+                    document.addEventListener('click', (e) => {
+                        if (!profileContainer.contains(e.target)) {
+                            profileContainer.classList.remove('active');
+                        }
+                    });
+                }
+            }
+            
+            function initProfileInteractions() {
+                const editPersonalBtn = document.getElementById('editPersonalBtn');
+                if (editPersonalBtn) {
+                    editPersonalBtn.addEventListener('click', () => {
+                        alert('Edit personal information functionality would open a form here.');
+                    });
+                }
+                
+                const avatarEditBtn = document.getElementById('avatarEditBtn');
+                if (avatarEditBtn) {
+                    avatarEditBtn.addEventListener('click', () => {
+                        alert('Avatar upload functionality would open here.');
+                    });
+                }
+                
+                const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+                if (deleteAccountBtn) {
+                    deleteAccountBtn.addEventListener('click', () => {
+                        if (confirm('⚠️ WARNING: This will permanently delete your account and all associated data. This action cannot be undone.\n\nAre you absolutely sure you want to delete your account?')) {
+                            alert('Account deletion would be processed here. Redirecting to homepage...');
+                            window.location.href = 'index.html';
+                        }
+                    });
+                }
+                
+                const saveChangesBtn = document.querySelector('.btn-primary[href="#"]');
+                if (saveChangesBtn) {
+                    saveChangesBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        alert('Changes saved successfully!');
+                    });
+                }
+                
+                const resetBtn = document.querySelector('.btn-secondary[href="#"]');
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (confirm('Reset all changes to default values?')) {
+                            alert('All changes have been reset.');
+                            location.reload();
+                        }
+                    });
+                }
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                fixLoadingScreen();
+                fixLogout();
+                fixMobileMenu();
+                fixProfileDropdown();
+                initProfileInteractions();
+                
+                console.log('✅ Profile page initialized successfully');
+            });
+            
+            setTimeout(() => {
+                const loader = document.getElementById('logoLoader');
+                if (loader && loader.style.display !== 'none') {
+                    loader.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }, 3500);
+            
+        })();
+    </script>
+</body>
+</html>
